@@ -26,6 +26,7 @@ public class Student {
 	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 		private Student student;
 	
+	
 	public Student() {
 		super();
 		// TODO Auto-generated constructor stub

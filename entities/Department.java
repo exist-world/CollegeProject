@@ -23,8 +23,9 @@ public class Department {
 	private String dept_email;
 	private String dept_position;
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY,targetEntity=Department.class,mappedBy="STUDENT")
 	private List<Department> departments= new ArrayList<>();
+	
 	
 	public Department() {
 		super();
