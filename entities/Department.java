@@ -1,5 +1,6 @@
 package College.SpringBootProject.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,9 +14,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="DEPARTMENT")
-public class Department {
+//@Table(name="DEPARTMENT")
+public class Department implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long dept_id;
@@ -23,8 +28,20 @@ public class Department {
 	private String dept_email;
 	private String dept_position;
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY,targetEntity=Department.class,mappedBy="STUDENT")
-	private List<Department> departments= new ArrayList<>();
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER,mappedBy="department")
+	private List<Student> students= new ArrayList<>();
+	
+    public List<Student> getStudents() {
+		return students;
+	}
+	public void setStudents(List<Student> students) {
+		this.students = students;
+	}
+	
+	public Department(List<Student> students) {
+		super();
+		this.students = students;
+	}
 	
 	
 	public Department() {
@@ -68,12 +85,7 @@ public class Department {
 				+ ", dept_position=" + dept_position + "]";
 	}
 	
-	public List<Department> getDepartments() {
-		return departments;
-	}
-	public void setDepartments(List<Department> departments) {
-		this.departments = departments;
-	}
+	
 	
 	
 	

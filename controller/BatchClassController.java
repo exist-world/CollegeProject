@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import College.SpringBootProject.entities.BatchClass;
@@ -19,7 +20,7 @@ import College.SpringBootProject.service.BatchClassService;
 
 
 @RestController
-//@RequestMapping("/batchClass")
+@RequestMapping("/batchClass")
 
 public class BatchClassController {
 	
@@ -33,7 +34,7 @@ public class BatchClassController {
 	}
 	
 	//create batchClass
-	@PostMapping("/batchClass")
+	@PostMapping()
 	public ResponseEntity<BatchClass> saveBatchClass(@RequestBody BatchClass batchClass)
 	{
 	    return new ResponseEntity<BatchClass>(batchClassService.
@@ -41,8 +42,8 @@ public class BatchClassController {
 	}
 	
 
-	//add all batchClass
-	@GetMapping("/batchClass")
+	//get all batchClass
+	@GetMapping()
 	public List<BatchClass> getAllBatchClass()
 	{
 		return batchClassService.getAllBatchClass();
@@ -50,7 +51,7 @@ public class BatchClassController {
 	}
 	
 	//get batchClass ById
-	@GetMapping("/batchClass/{id}")
+	@GetMapping("{id}")
 	public ResponseEntity<BatchClass> getBatchClassById(@PathVariable("id")long batchClassId)
 	{
 		return new ResponseEntity<BatchClass>(batchClassService.
@@ -60,7 +61,7 @@ public class BatchClassController {
 	
 
 	//update batchClass
-	@PutMapping("/batchClass/{id}")
+	@PutMapping("{id}")
 	public ResponseEntity<BatchClass> updateBatchClass
 	(@PathVariable("id") long id,@RequestBody BatchClass batchClass)
 	{
@@ -71,7 +72,7 @@ public class BatchClassController {
 	
 
 	// delete batchClass
-	@DeleteMapping("/batchClass/{id}")
+	@DeleteMapping("{id}")
 	public ResponseEntity<String> deletebatchClass(@PathVariable("id") long id)
 	{
 		//delete student from DB

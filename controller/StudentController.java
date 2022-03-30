@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -21,7 +22,7 @@ import College.SpringBootProject.service.StudentService;
 
 
 @RestController
-//@RequestMapping("/student")
+@RequestMapping("/student")
 public class StudentController {
 	
 	
@@ -34,22 +35,22 @@ public class StudentController {
 	}
 
 	//create student
-	 @PostMapping("/students")
+	@PostMapping()
 	public ResponseEntity<Student> saveStudent(@RequestBody Student student)
 	{
 		return new ResponseEntity<Student>(studentService.
 				saveStudent(student), HttpStatus.CREATED);
 	}
 	
-	//add all student
-	@GetMapping("/students")
+	//get all student
+	@GetMapping()
 	public List<Student> getAllStudents(){
 		return studentService.getAllStudents();
 		
 	}
 	
 	//get student ById
-	@GetMapping("/students/{studentId}")
+	@GetMapping("{id}")
 	public ResponseEntity<Student> getStudentById(@PathVariable("id")long studentId)
 	{
 		return new ResponseEntity<Student>(studentService.
@@ -58,7 +59,7 @@ public class StudentController {
 	}
 	
 	//update student
-	 @PutMapping("/student")
+	@PutMapping("{id}")
 	public ResponseEntity<Student> updateStudent
 	(@PathVariable("id") long id,@RequestBody Student student)
 	{
@@ -68,7 +69,7 @@ public class StudentController {
 	}
 	
 	// delete student
-	@DeleteMapping("/student/{id}")
+	@DeleteMapping("{id}")
 	public ResponseEntity<String> deleteStudent(@PathVariable("id") long id)
 	{
 		//delete student from DB

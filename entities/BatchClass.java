@@ -1,5 +1,6 @@
 package College.SpringBootProject.entities;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name="CLASS")
-public class BatchClass {
+public class BatchClass implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long cl_id;
@@ -26,12 +31,26 @@ public class BatchClass {
 	@JsonFormat(pattern="dd-MM-yyyy")
 	private Date cl_date;
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY,targetEntity=BatchClass.class,mappedBy="STUDENT")
-	private List<BatchClass> classes= new ArrayList<>();
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER,mappedBy="batchClass")
+	private List<Student> student= new ArrayList<>();
+	
+	public List<Student> getStudent() {
+		return student;
+	}
+	public void setStudent(List<Student> student) {
+		this.student = student;
+	}
+	
+	public BatchClass(List<Student> student) {
+		super();
+		this.student = student;
+	}
+	//@ManyToone
+	//private Department department;
 	
 	public BatchClass() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 	public BatchClass(long cl_id, String cl_name, Date cl_date) {
 		super();
@@ -59,12 +78,8 @@ public class BatchClass {
 	}
 	
 	
-	public List<BatchClass> getClasses() {
-		return classes;
-	}
-	public void setClasses(List<BatchClass> classes) {
-		this.classes = classes;
-	}
+	
+	
 	@Override
 	public String toString() {
 		return "Class [cl_id=" + cl_id + ", cl_name=" + cl_name + ", cl_date=" + cl_date + "]";

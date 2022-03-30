@@ -2,6 +2,8 @@ package College.SpringBootProject.controller;
 
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +14,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import College.SpringBootProject.entities.Department;
 import College.SpringBootProject.service.DepartmentService;
 
 
 @RestController
-//@RequestMapping("/department")
+@RequestMapping("/department")
 public class DepartmentController {
 	
 	 @Autowired
@@ -31,15 +34,23 @@ public class DepartmentController {
 	}
 	
    //create department
-	@PostMapping("/department")
+	@PostMapping()
 	public ResponseEntity<Department> saveDepartment(@RequestBody Department department)
 	{
 		return new ResponseEntity<Department>(departmentService.
 					saveDepartment(department), HttpStatus.CREATED);
 	}
 		
+	//get all department ById
+	@GetMapping()
+	public List<Department> getAllDepartment()
+	{
+		return departmentService.getAllDepartments();
+		
+	}
+	
    //get department ById
-	@GetMapping("/department/{departmentId}")
+	@GetMapping("{id}")
 	public ResponseEntity<Department> getDepartmentById(@PathVariable("id")long departmentId)
 	{
 		return new ResponseEntity<Department>(departmentService.
@@ -49,7 +60,7 @@ public class DepartmentController {
 		
 
     //update department
-	@PutMapping("/department")
+	@PutMapping("{id}")
 	public ResponseEntity<Department> updateDepartment
 		(@PathVariable("id") long id,@RequestBody Department department)
 	{
@@ -59,7 +70,7 @@ public class DepartmentController {
 	}
 		
 	// delete department
-	@DeleteMapping("/department/{id}")
+	@DeleteMapping("{id}")
 	public ResponseEntity<String> deleteDepartment(@PathVariable("id") long id)
 	{
 			//delete department from DB
